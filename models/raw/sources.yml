@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+  - name: raw
+    database: aegroupfive     # your Snowflake DB name
+    schema: raw               # the schema name in your DB
+    tables:
+      - name: campaigns
+        description: "Raw campaign details"
+      
+      - name: campaign_performance
+        description: "Raw campaign performance metrics"
+       
+      - name: channels
+        description: "Raw marketing channels lookup"
+  
+      - name: email_campaigns
+        description: "Raw email campaign details"
+ 
+      - name: email_lists
+        description: "Raw email list definitions"
+  
+      - name: subscribers
+        description: "Raw subscriber data"
+ 
