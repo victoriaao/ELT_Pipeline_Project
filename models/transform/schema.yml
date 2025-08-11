@@ -1,0 +1,62 @@
+version: 2
+
+models:
+  - name: trs_compaigns
+    columns:
+      - name: campaign_id
+        description: primary key
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              field: <campaign_id>
+              to: ref('trs_campaign_performance')
+          - relationships:
+              field: <campaign_id>
+              to: ref('trs_email_campaigns')
+
+
+  - name: campaign_performance
+    columns:
+      - name: performance_id
+        description: primary key
+        tests:
+          - not_null
+          - unique
+
+  - name: trs_channel
+    columns:
+      - name: channel_id
+        description: primary key
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              field: <channel_id>
+              to: ref('trs_campaigns')
+
+  - name: trs_email_campaigns
+    columns:
+      - name: email_campaign_id
+        description: primary key
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              field: <list_id>
+              to: ref('trs_email_lists')
+  - name: trs_email_lists
+    columns:
+      - name: list_id
+        description: primary key
+        tests:
+          - not_null
+          - unique
+
+  - name: trs_subscribers
+    columns:
+      - name: subscriber_id
+        description: primary key
+        tests:
+          - not_null
+          - unique

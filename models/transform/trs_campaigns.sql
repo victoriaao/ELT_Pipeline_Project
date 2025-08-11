@@ -1,16 +1,23 @@
 
-SELECT
-  CAMPAIGN_ID,
-  TRIM(CAMPAIGN_NAME) AS CAMPAIGN_NAME,
-  INITCAP(TRIM(STATUS)) AS STATUS,
-  INITCAP(TRIM(CHANNEL)) AS CHANNEL,
-  START_DATE,
-  END_DATE,
-  --DATEDIFF(DAY, START_DATE, END_DATE) AS CAMPAIGN_DURATION_DAYS,
-  INITCAP(TRIM(CAMPAIGN_TYPE)) AS CAMPAIGN_TYPE,
-  INITCAP(TRIM(TARGET_AUDIENCE)) AS TARGET_AUDIENCE,
-  COALESCE(BUDGET, 0) AS BUDGET
-
+select 
+	campaign_id, --primary
+	case
+		when trim(channel) = 'Email' then 1
+		when trim(channel) = 'Social Media' then 2
+		when trim(channel) = 'PPC' then 3
+		when trim(channel) = 'Display' then 4
+		when trim(channel) = 'Content marketing' then 5
+		when trim(channel) = 'Influencer' then 6
+		when trim(channel) = 'Direct Mail' then 7
+	end as channel_id, --foreign key
+	trim(campaign_name) as campaign_name,
+	trim(channel) as channel,
+	start_date,
+	end_date,
+	trim(campaign_type) as campaign_type,
+	trim(target_audience) as target_audience,
+	coalesce(budget, 0) as budget,
+	trim(status) as status
 FROM {{ source('raw', 'campaigns') }}
 WHERE CAMPAIGN_ID IS NOT NULL
 
