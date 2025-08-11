@@ -1,7 +1,7 @@
-SELECT
-  CHANNEL_ID,
-  INITCAP(TRIM(CHANNEL_NAME)) AS CHANNEL_NAME,
-  INITCAP(TRIM(CHANNEL_TYPE)) AS CHANNEL_TYPE,
-  COALESCE(COST_PER_CHANNEL, 0) AS COST_PER_CHANNEL
+select
+  channel_id,
+  trim(channel_name) as channel_name,
+  trim(channel_type) as channel_type,
+  coalesce(cost_per_channel, 0) as cost_per_channel
 FROM {{ source('raw', 'channels') }}
 WHERE CHANNEL_ID IS NOT NULL

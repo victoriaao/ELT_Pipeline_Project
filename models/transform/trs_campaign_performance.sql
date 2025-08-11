@@ -1,21 +1,20 @@
-SELECT
-  PERFORMANCE_ID,
-  --TO_DATE(DATE) AS DATE_KEY,
-  DATE,
-  CAMPAIGN_ID,
-  COALESCE(CAST(SPEND AS DECIMAL(18,2)), 0) AS SPEND,
-  COALESCE(CAST(REVENUE AS DECIMAL(18,2)), 0) AS REVENUE,
-  CLICKS,
-  CONVERSIONS,
-  IMPRESSIONS,
-  LEADS_GENERATED
-  /*CASE
-    WHEN COST_PER_CLICK BETWEEN 0 AND 1000 THEN CAST(COST_PER_CLICK AS DECIMAL(18,2))
-    ELSE NULL
-  END AS COST_PER_CLICK,
-  CASE
-    WHEN COST_PER_CONVERSION BETWEEN 0 AND 1000 THEN CAST(COST_PER_CONVERSION AS DECIMAL(18,2))
-    ELSE NULL
-  END AS COST_PER_CONVERSION */
+select
+  performance_id, --primary key
+  date,
+  campaign_id, -- foreign key
+  coalesce(cast(spend as decimal(18,2)), 0) as spend,
+  coalesce(cast(revenue as decimal(18,2)), 0) as revenue,
+  clicks,
+  conversions,
+  impressions,
+  leads_generated,
+  case
+    when cost_per_click > 0 then cast(cost_per_click as decimal(18,2))
+    else 0
+  end as cost_per_click,
+  case
+    when cost_per_conversion > 0 then cast(cost_per_conversion as decimal(18,2))
+    else 0
+  end as cost_per_conversion
 FROM {{ source('raw', 'campaign_performance') }}
 WHERE PERFORMANCE_ID IS NOT NULL
